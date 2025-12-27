@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Shipping Cost Calculator - Estimate shipping costs based on weight, dimensions, and destination.">
+    <meta name="keywords" content="shipping calculator, shipping cost, freight cost, shipping rates">
+    <title>Shipping Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Shipping Cost Calculator</h1>
+                <p class="calculator-description">Calculate estimated shipping costs based on weight, dimensions, and distance.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="weight">Weight (lbs)</label>
+                            <input type="number" id="weight" name="weight" placeholder="10" value="10" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="length">Length (inches)</label>
+                            <input type="number" id="length" name="length" placeholder="12" value="12" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="width">Width (inches)</label>
+                            <input type="number" id="width" name="width" placeholder="8" value="8" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="height">Height (inches)</label>
+                            <input type="number" id="height" name="height" placeholder="6" value="6" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="distance">Distance (miles)</label>
+                            <input type="number" id="distance" name="distance" placeholder="500" value="500" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Estimated Shipping Cost</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Dimensional Weight</h3>
+                            <div class="result-value" id="dimWeight">0 lbs</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Billable Weight</h3>
+                            <div class="result-value" id="billableWeight">0 lbs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ShippingCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const dimWeight = (values.length * values.width * values.height) / 166;
+                        const billableWeight = Math.max(values.weight, dimWeight);
+                        const baseCost = billableWeight * 0.5;
+                        const distanceCost = (values.distance / 100) * 2;
+                        const totalCost = baseCost + distanceCost;
+                        
+                        document.getElementById('dimWeight').innerHTML = dimWeight.toFixed(1) + ' lbs';
+                        document.getElementById('billableWeight').innerHTML = billableWeight.toFixed(1) + ' lbs';
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            }
+        }
+
+        const calculator = new ShippingCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

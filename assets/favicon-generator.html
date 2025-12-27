@@ -1,0 +1,40 @@
+<!-- Helper file to generate favicon -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="64" height="64"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Background
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(0, 0, 64, 64);
+
+        // Border
+        ctx.strokeStyle = '#0066ff';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(0, 0, 64, 64);
+
+        // CC Text
+        ctx.fillStyle = '#0066ff';
+        ctx.font = 'bold 36px Courier New';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('CC', 32, 32);
+
+        // Download
+        canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'favicon.png';
+            link.click();
+        });
+    </script>
+</body>
+</html>

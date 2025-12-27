@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Down Payment Calculator - Calculate down payment amounts based on percentage or desired amount.">
+    <meta name="keywords" content="down payment calculator, home purchase, mortgage down payment, calculator">
+    <meta name="author" content="Cost Calculators">
+    <title>Down Payment Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Down Payment Calculator",
+      "description": "Calculate down payments for home purchases",
+      "url": "https://costcalculators.github.io/calculators/down-payment.html",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Down Payment Calculator</h1>
+                <p class="calculator-description">Calculate required down payment amounts based on home price and down payment percentage.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="homePrice">Home Price ($)</label>
+                            <input type="number" id="homePrice" name="homePrice" placeholder="500000" value="500000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="percentage">Down Payment Percentage (%)</label>
+                            <input type="number" id="percentage" name="percentage" placeholder="20" value="20" step="0.5" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Down Payment Amount</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Loan Amount</h3>
+                            <div class="result-value" id="loanAmount">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class DownPaymentCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const downPayment = values.homePrice * (values.percentage / 100);
+                        const loanAmount = values.homePrice - downPayment;
+                        
+                        document.getElementById('loanAmount').innerHTML = '$' + loanAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return downPayment;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            }
+        }
+
+        const calculator = new DownPaymentCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Construction Cost Calculator - Estimate material costs for construction projects including concrete, lumber, roofing, and more.">
+    <meta name="keywords" content="construction calculator, building cost, material cost, construction estimate, project calculator">
+    <meta name="author" content="Cost Calculators">
+    <meta property="og:title" content="Construction Cost Calculator">
+    <meta property="og:description" content="Estimate construction costs for your building projects.">
+    <meta property="og:type" content="website">
+    <title>Construction Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Construction Cost Calculator",
+      "description": "Estimate construction material and labor costs",
+      "url": "https://costcalculators.github.io/calculators/construction.html",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Construction Cost Calculator</h1>
+                <p class="calculator-description">Estimate total construction costs for your building projects based on square footage and material costs.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="sqft">Square Footage</label>
+                            <input type="number" id="sqft" name="sqft" placeholder="5000" value="5000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="costPerSqft">Cost per Square Foot ($)</label>
+                            <input type="number" id="costPerSqft" name="costPerSqft" placeholder="150" value="150" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="laborPercent">Labor Cost (% of materials)</label>
+                            <input type="number" id="laborPercent" name="laborPercent" placeholder="30" value="30" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Material Cost</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Labor Cost</h3>
+                            <div class="result-value" id="laborCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ConstructionCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const materialCost = values.sqft * values.costPerSqft;
+                        const laborCost = materialCost * (values.laborPercent / 100);
+                        const totalCost = materialCost + laborCost;
+                        
+                        document.getElementById('laborCost').innerHTML = '$' + laborCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return materialCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            }
+        }
+
+        const calculator = new ConstructionCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

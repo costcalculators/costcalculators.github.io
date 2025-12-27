@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Fuel Economy Calculator - Calculate your vehicle's fuel efficiency (MPG), fuel costs, and consumption rates instantly.">
+    <meta name="keywords" content="fuel calculator, MPG calculator, fuel economy, gas mileage, fuel consumption">
+    <meta name="author" content="Cost Calculators">
+    <meta property="og:title" content="Fuel Economy Calculator">
+    <meta property="og:description" content="Calculate fuel efficiency and costs for your vehicle trips.">
+    <meta property="og:type" content="website">
+    <title>Fuel Economy Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Fuel Economy Calculator",
+      "description": "Calculate vehicle fuel efficiency and costs",
+      "url": "https://costcalculators.github.io/calculators/fuel.html",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Fuel Economy Calculator</h1>
+                <p class="calculator-description">Calculate your vehicle's fuel efficiency (MPG) and estimate fuel costs for your trips.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="distance">Distance Traveled (miles)</label>
+                            <input type="number" id="distance" name="distance" placeholder="300" value="300" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="gallons">Gallons Used</label>
+                            <input type="number" id="gallons" name="gallons" placeholder="10" value="10" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="gasPrice">Price per Gallon ($)</label>
+                            <input type="number" id="gasPrice" name="gasPrice" placeholder="3.50" value="3.50" step="0.01" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Fuel Efficiency (MPG)</h3>
+                            <div class="result-value" id="result">0 MPG</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Fuel Cost</h3>
+                            <div class="result-value" id="fuelCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Cost per Mile</h3>
+                            <div class="result-value" id="costPerMile">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class FuelCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const mpg = values.distance / values.gallons;
+                        const fuelCost = values.gallons * values.gasPrice;
+                        const costPerMile = fuelCost / values.distance;
+                        
+                        document.getElementById('fuelCost').innerHTML = '$' + fuelCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('costPerMile').innerHTML = '$' + costPerMile.toFixed(2);
+                        
+                        return mpg;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = this.result.toFixed(2) + ' MPG';
+                }
+            }
+        }
+
+        const calculator = new FuelCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

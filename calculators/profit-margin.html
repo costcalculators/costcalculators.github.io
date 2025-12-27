@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Profit Margin Calculator - Calculate gross profit, profit percentage, and markup for your business.">
+    <meta name="keywords" content="profit calculator, margin calculator, markup calculator, profit percentage">
+    <meta name="author" content="Cost Calculators">
+    <title>Profit Margin Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Profit Margin Calculator",
+      "description": "Calculate profit margins and markup for business pricing",
+      "url": "https://costcalculators.github.io/calculators/profit-margin.html",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Profit Margin Calculator</h1>
+                <p class="calculator-description">Calculate profit margins, gross profit, and profit percentage based on cost and selling price.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="cost">Cost Price ($)</label>
+                            <input type="number" id="cost" name="cost" placeholder="100" value="100" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="price">Selling Price ($)</label>
+                            <input type="number" id="price" name="price" placeholder="150" value="150" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Profit</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Profit Margin %</h3>
+                            <div class="result-value" id="margin">0%</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Markup %</h3>
+                            <div class="result-value" id="markup">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ProfitMarginCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const profit = values.price - values.cost;
+                        const marginPercent = (profit / values.price) * 100;
+                        const markupPercent = (profit / values.cost) * 100;
+                        
+                        document.getElementById('margin').innerHTML = marginPercent.toFixed(2) + '%';
+                        document.getElementById('markup').innerHTML = markupPercent.toFixed(2) + '%';
+                        
+                        return profit;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            }
+        }
+
+        const calculator = new ProfitMarginCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

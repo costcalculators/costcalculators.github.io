@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Electricity Cost Calculator - Calculate your monthly and annual electricity bills based on kilowatt-hours consumed and rate per kWh.">
+    <meta name="keywords" content="electricity calculator, electricity cost, power bill, utility calculator, kWh calculator">
+    <meta name="author" content="Cost Calculators">
+    <meta property="og:title" content="Electricity Cost Calculator">
+    <meta property="og:description" content="Calculate your monthly electricity costs instantly with our free calculator.">
+    <meta property="og:type" content="website">
+    <title>Electricity Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Electricity Cost Calculator",
+      "description": "Calculate monthly and annual electricity costs based on kilowatt-hour consumption",
+      "url": "https://costcalculators.github.io/calculators/electricity.html",
+      "applicationCategory": "UtilityApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Electricity Cost Calculator</h1>
+                <p class="calculator-description">Calculate your monthly and annual electricity bills based on your usage and local electricity rates.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="kwh">Monthly kWh Usage</label>
+                            <input type="number" id="kwh" name="kwh" placeholder="1000" value="1000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="ratePerKwh">Rate per kWh ($)</label>
+                            <input type="number" id="ratePerKwh" name="ratePerKwh" placeholder="0.12" value="0.12" step="0.01" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Monthly Cost</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Annual Cost</h3>
+                            <div class="result-value" id="annualCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ElectricityCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const monthlyCost = values.kwh * values.ratePerKwh;
+                        const annualCost = monthlyCost * 12;
+                        
+                        document.getElementById('annualCost').innerHTML = '$' + annualCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return monthlyCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+            }
+        }
+
+        const calculator = new ElectricityCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "name": "Cost Calculators",
+  "short_name": "CostCalc",
+  "description": "Free online cost calculators for mortgages, loans, construction, shipping, and more",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#0066ff",
+  "icons": [
+    {
+      "src": "/assets/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/favicon.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Mortgage Calculator",
+      "short_name": "Mortgage",
+      "description": "Calculate monthly mortgage payments",
+      "url": "/calculators/mortgage.html",
+      "icons": [
+        {
+          "src": "/assets/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Loan Calculator",
+      "short_name": "Loan",
+      "description": "Calculate loan payments",
+      "url": "/calculators/loan.html",
+      "icons": [
+        {
+          "src": "/assets/favicon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

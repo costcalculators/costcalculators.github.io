@@ -1,0 +1,16 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#1a1a1a" stroke="#0066ff" stroke-width="3"/>
+  
+  <!-- CC Text -->
+  <text x="100" y="120" font-size="80" font-weight="bold" fill="#0066ff" text-anchor="middle" font-family="Courier New, monospace">CC</text>
+  
+  <!-- Decorative border -->
+  <rect x="20" y="20" width="160" height="160" fill="none" stroke="#00cc66" stroke-width="2"/>
+  
+  <!-- Color accent shapes -->
+  <rect x="140" y="30" width="20" height="20" fill="#ffcc00"/>
+  <rect x="140" y="150" width="20" height="20" fill="#ff3333"/>
+  <circle cx="30" cy="150" r="10" fill="#9933ff"/>
+  <circle cx="30" cy="30" r="10" fill="#ff9900"/>
+</svg>
