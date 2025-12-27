@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="APR Calculator - Calculate Annual Percentage Rate for loans, credit cards, and mortgages. Compare true borrowing costs.">
+    <meta name="keywords" content="APR calculator, annual percentage rate, loan calculator, credit card rate">
+    <title>APR Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "APR Calculator",
+        "description": "Calculate Annual Percentage Rate including fees and interest for accurate loan comparisons",
+        "url": "https://costcalculators.github.io/calculators/apr.html",
+        "applicationCategory": "FinanceApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">APR Calculator</h1>
+                <p class="calculator-description">Calculate the true Annual Percentage Rate (APR) of any loan including interest rate and fees. Compare lending offers accurately.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="loanAmount">Loan Amount ($)</label>
+                            <input type="number" id="loanAmount" name="loanAmount" placeholder="10000" value="10000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="nominalRate">Nominal Interest Rate (%)</label>
+                            <input type="number" id="nominalRate" name="nominalRate" placeholder="5.0" value="5.0" step="0.01" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="loanTerm">Loan Term (Months)</label>
+                            <input type="number" id="loanTerm" name="loanTerm" placeholder="60" value="60" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="fees">Loan Fees ($)</label>
+                            <input type="number" id="fees" name="fees" placeholder="0" value="0" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="compoundingFrequency">Compounding Frequency</label>
+                            <select id="compoundingFrequency" name="compoundingFrequency" data-calculate>
+                                <option value="12">Monthly</option>
+                                <option value="4">Quarterly</option>
+                                <option value="2">Semi-Annual</option>
+                                <option value="1">Annual</option>
+                                <option value="365">Daily</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>APR (Annual Percentage Rate)</h3>
+                            <div class="result-value" id="apr">0.00%</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Monthly Payment</h3>
+                            <div class="result-value" id="monthlyPayment">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Interest Paid</h3>
+                            <div class="result-value" id="totalInterest">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Cost of Loan</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Understanding APR vs Interest Rate</h2>
+                    <p>APR (Annual Percentage Rate) includes both the interest rate AND fees, giving you the true cost of borrowing. The nominal interest rate alone doesn't tell the full story.</p>
+                    
+                    <h3>Key Differences:</h3>
+                    <ul>
+                        <li><strong>Interest Rate:</strong> The percentage of principal charged as interest annually</li>
+                        <li><strong>APR:</strong> Interest rate plus all fees, expressed as an annual percentage</li>
+                        <li><strong>Example:</strong> A 5% interest rate with $200 in fees becomes a higher APR</li>
+                    </ul>
+
+                    <h3>Why APR Matters:</h3>
+                    <p>APR allows you to compare loans accurately. Two loans with different interest rates and fees can be compared on equal footing using APR.</p>
+
+                    <h3>Typical Fees Included in APR:</h3>
+                    <ul>
+                        <li>Origination fees</li>
+                        <li>Documentation fees</li>
+                        <li>Processing fees</li>
+                        <li>Application fees</li>
+                    </ul>
+
+                    <h3>Compounding Frequency Impact:</h3>
+                    <p>How often interest is calculated affects the final amount paid. More frequent compounding results in higher total interest. Daily compounding typically results in the highest total interest paid.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class APRCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const principal = values.loanAmount;
+                        const nominalMonthlyRate = values.nominalRate / 100 / 12;
+                        const months = values.loanTerm;
+                        const fees = values.fees;
+                        
+                        // Calculate monthly payment with nominal rate
+                        let monthlyPayment = 0;
+                        if (nominalMonthlyRate === 0) {
+                            monthlyPayment = principal / months;
+                        } else {
+                            monthlyPayment = principal * (nominalMonthlyRate * Math.pow(1 + nominalMonthlyRate, months)) / (Math.pow(1 + nominalMonthlyRate, months) - 1);
+                        }
+                        
+                        const totalPayments = monthlyPayment * months;
+                        const totalInterest = totalPayments - principal;
+                        const totalCost = totalPayments + fees;
+                        
+                        // Simple APR calculation including fees
+                        const totalCharges = totalInterest + fees;
+                        const apr = ((totalCharges / principal) / (months / 12)) * 100;
+                        
+                        // Adjust for compounding
+                        const compounding = values.compoundingFrequency;
+                        const effectiveRate = Math.pow(1 + (values.nominalRate / 100) / compounding, compounding) - 1;
+                        const adjustedAPR = (effectiveRate * 100) + ((fees / principal) / (months / 12));
+                        
+                        document.getElementById('apr').innerHTML = adjustedAPR.toFixed(2) + '%';
+                        document.getElementById('monthlyPayment').innerHTML = '$' + monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalInterest').innerHTML = '$' + totalInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return apr;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results are displayed in the calculate function
+            }
+        }
+
+        const calculator = new APRCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

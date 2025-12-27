@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Construction Cost Calculator - Estimate total construction costs based on square footage and regional cost data.">
+    <meta name="keywords" content="construction cost, building calculator, construction estimate, construction budget">
+    <title>Construction Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Construction Cost Calculator",
+        "description": "Estimate construction costs for residential and commercial building projects",
+        "url": "https://costcalculators.github.io/calculators/construction-cost.html",
+        "applicationCategory": "ConstructionApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Construction Cost Calculator</h1>
+                <p class="calculator-description">Estimate total construction costs for residential or commercial projects based on square footage, region, and project specifications.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="projectType">Project Type</label>
+                            <select id="projectType" name="projectType" data-calculate>
+                                <option value="residential">Residential Home</option>
+                                <option value="commercial">Commercial Building</option>
+                                <option value="industrial">Industrial Facility</option>
+                                <option value="remodel">Home Remodel</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="squareFeet">Square Footage</label>
+                            <input type="number" id="squareFeet" name="squareFeet" placeholder="5000" value="5000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="costPerSqFt">Average Cost Per Square Foot ($)</label>
+                            <input type="number" id="costPerSqFt" name="costPerSqFt" placeholder="150" value="150" step="1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="region">Region Cost Adjustment (%)</label>
+                            <select id="region" name="region" data-calculate>
+                                <option value="-15">Rural/Low Cost (-15%)</option>
+                                <option value="-7">Suburban (-7%)</option>
+                                <option value="0" selected>National Average (0%)</option>
+                                <option value="10">Urban (+10%)</option>
+                                <option value="20">Major City (+20%)</option>
+                                <option value="35">Coastal/High Cost (+35%)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quality">Quality Level</label>
+                            <select id="quality" name="quality" data-calculate>
+                                <option value="-20">Budget (-20%)</option>
+                                <option value="-10">Economy (-10%)</option>
+                                <option value="0" selected>Standard (0%)</option>
+                                <option value="15">Premium (+15%)</option>
+                                <option value="30">Luxury (+30%)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="contingency">Contingency Reserve (%)</label>
+                            <input type="number" id="contingency" name="contingency" placeholder="10" value="10" step="1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="softCosts">Soft Costs (Design, Permits, etc) (%)</label>
+                            <input type="number" id="softCosts" name="softCosts" placeholder="12" value="12" step="1" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Base Construction Cost</h3>
+                            <div class="result-value" id="baseCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Soft Costs</h3>
+                            <div class="result-value" id="softCostAmount">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Contingency Reserve</h3>
+                            <div class="result-value" id="contingencyAmount">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Construction Cost Estimation</h2>
+                    <p>Construction costs vary widely based on project type, location, quality standards, and market conditions. Use this calculator to get a rough estimate for budgeting purposes.</p>
+                    
+                    <h3>Cost Per Square Foot Guidelines:</h3>
+                    <ul>
+                        <li><strong>Residential:</strong> $100-300+ per sq ft depending on quality</li>
+                        <li><strong>Commercial:</strong> $150-400+ per sq ft</li>
+                        <li><strong>Industrial:</strong> $75-250+ per sq ft</li>
+                        <li><strong>Renovation:</strong> $150-400+ per sq ft</li>
+                    </ul>
+
+                    <h3>Regional Variations:</h3>
+                    <p>Labor and materials costs vary significantly by region. Coastal areas and major cities typically cost 20-40% more than rural areas. Cost inflation also affects different regions differently.</p>
+
+                    <h3>Quality Levels Impact:</h3>
+                    <p>Budget construction uses basic materials and finishes. Premium includes higher-quality materials and finishes. Luxury includes high-end finishes, custom work, and premium materials throughout.</p>
+
+                    <h3>What's Included in Soft Costs:</h3>
+                    <ul>
+                        <li>Architectural and engineering design fees</li>
+                        <li>Permits and inspections</li>
+                        <li>Project management</li>
+                        <li>Insurance and bonding</li>
+                        <li>Legal and surveying fees</li>
+                    </ul>
+
+                    <h3>Contingency Reserve:</h3>
+                    <p>A contingency reserve (typically 10-20%) accounts for unexpected costs, changes, and price fluctuations. Always budget for contingencies in construction projects.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ConstructionCostCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const squareFeet = values.squareFeet;
+                        let costPerSqFt = values.costPerSqFt;
+                        
+                        // Adjust for region
+                        costPerSqFt = costPerSqFt * (1 + values.region / 100);
+                        
+                        // Adjust for quality
+                        costPerSqFt = costPerSqFt * (1 + values.quality / 100);
+                        
+                        // Base construction cost
+                        const baseCost = squareFeet * costPerSqFt;
+                        
+                        // Soft costs
+                        const softCostAmount = baseCost * (values.softCosts / 100);
+                        
+                        // Contingency
+                        const contingencyAmount = (baseCost + softCostAmount) * (values.contingency / 100);
+                        
+                        // Total
+                        const totalCost = baseCost + softCostAmount + contingencyAmount;
+                        
+                        document.getElementById('baseCost').innerHTML = '$' + baseCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('softCostAmount').innerHTML = '$' + softCostAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('contingencyAmount').innerHTML = '$' + contingencyAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new ConstructionCostCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

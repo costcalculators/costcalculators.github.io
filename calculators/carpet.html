@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Carpet Calculator - Calculate carpet needed for rooms and estimate installation costs.">
+    <meta name="keywords" content="carpet calculator, carpet cost, flooring, carpet installation">
+    <title>Carpet Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Carpet Calculator",
+        "description": "Calculate carpet materials needed and estimate total installation costs for flooring projects",
+        "url": "https://costcalculators.github.io/calculators/carpet.html",
+        "applicationCategory": "HomeImprovementApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Carpet Calculator</h1>
+                <p class="calculator-description">Calculate how much carpet and padding you need, plus installation costs for your flooring project.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="roomLength">Room Length (Feet)</label>
+                            <input type="number" id="roomLength" name="roomLength" placeholder="20" value="20" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="roomWidth">Room Width (Feet)</label>
+                            <input type="number" id="roomWidth" name="roomWidth" placeholder="15" value="15" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="carpetType">Carpet Type/Quality</label>
+                            <select id="carpetType" name="carpetType" data-calculate>
+                                <option value="budget">Budget ($2-4/sq ft)</option>
+                                <option value="standard" selected>Standard ($4-8/sq ft)</option>
+                                <option value="premium">Premium ($8-15/sq ft)</option>
+                                <option value="luxury">Luxury ($15+/sq ft)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="carpetPricePerSqFt">Carpet Price per Sq Ft ($)</label>
+                            <input type="number" id="carpetPricePerSqFt" name="carpetPricePerSqFt" placeholder="6" value="6" step="0.5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="paddingType">Carpet Padding Type</label>
+                            <select id="paddingType" name="paddingType" data-calculate>
+                                <option value="standard">Standard Padding ($0.50/sq ft)</option>
+                                <option value="upgraded" selected>Upgraded Padding ($0.75/sq ft)</option>
+                                <option value="premium">Premium Padding ($1.00+/sq ft)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="installationCost">Installation per Sq Ft ($)</label>
+                            <input type="number" id="installationCost" name="installationCost" placeholder="1.50" value="1.50" step="0.25" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="removal">Remove Old Carpet ($)</label>
+                            <input type="number" id="removal" name="removal" placeholder="0" value="0" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="seaming">Seaming & Extras ($)</label>
+                            <input type="number" id="seaming" name="seaming" placeholder="0" value="0" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Square Footage</h3>
+                            <div class="result-value" id="squareFeet">0</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Carpet Cost</h3>
+                            <div class="result-value" id="carpetCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Installation Cost</h3>
+                            <div class="result-value" id="installCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Carpet Installation Guide</h2>
+                    <p>Carpet costs include the material, padding, and installation labor. Average residential carpet installation costs $3-12 per square foot all-in.</p>
+                    
+                    <h3>Carpet Quality Levels:</h3>
+                    <ul>
+                        <li><strong>Budget:</strong> $2-4/sq ft. Basic quality, shorter lifespan (3-5 years)</li>
+                        <li><strong>Standard:</strong> $4-8/sq ft. Good quality, average lifespan (7-10 years)</li>
+                        <li><strong>Premium:</strong> $8-15/sq ft. High quality, long lifespan (10-15 years)</li>
+                        <li><strong>Luxury:</strong> $15+/sq ft. Exceptional quality, extended durability (15+ years)</li>
+                    </ul>
+
+                    <h3>Padding Selection:</h3>
+                    <ul>
+                        <li><strong>Standard:</strong> 5/16-3/8 inch, adequate for most homes</li>
+                        <li><strong>Upgraded:</strong> 7/16-1/2 inch, better comfort and durability</li>
+                        <li><strong>Premium:</strong> Memory foam or specialty padding, maximum comfort</li>
+                    </ul>
+
+                    <h3>Carpet Pile Types:</h3>
+                    <ul>
+                        <li><strong>Saxony:</strong> Most popular, plush feel, moderate wear resistance</li>
+                        <li><strong>Frieze:</strong> Twisted fibers, excellent durability, hides footprints</li>
+                        <li><strong>Berber:</strong> Looped pile, very durable, good for high-traffic areas</li>
+                        <li><strong>Shag:</strong> Long, luxurious, requires more maintenance</li>
+                    </ul>
+
+                    <h3>Installation Factors:</h3>
+                    <p>Installation costs depend on room complexity, seaming needs, and stairs. Complex layouts with many seams cost more. Removal of old carpet typically adds $1-2/sq ft.</p>
+
+                    <h3>Carpet Care & Longevity:</h3>
+                    <ul>
+                        <li>Professional cleaning every 12-18 months extends life</li>
+                        <li>Vacuuming 2-3 times weekly prevents wear</li>
+                        <li>Use area rugs in high-traffic zones</li>
+                        <li>Address stains immediately for best results</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class CarpetCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const squareFeet = values.roomLength * values.roomWidth;
+                        
+                        // Padding costs based on type
+                        const paddingCosts = {
+                            'standard': 0.50,
+                            'upgraded': 0.75,
+                            'premium': 1.00
+                        };
+                        
+                        const paddingCost = paddingCosts[values.paddingType] * squareFeet;
+                        const carpetCost = squareFeet * values.carpetPricePerSqFt;
+                        const installCost = squareFeet * values.installationCost;
+                        const totalCost = carpetCost + paddingCost + installCost + values.removal + values.seaming;
+                        
+                        document.getElementById('squareFeet').innerHTML = squareFeet.toFixed(0);
+                        document.getElementById('carpetCost').innerHTML = '$' + (carpetCost + paddingCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('installCost').innerHTML = '$' + (installCost + values.removal + values.seaming).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new CarpetCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

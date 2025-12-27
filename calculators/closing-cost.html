@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Closing Cost Calculator - Estimate total closing costs for home purchase including title, appraisal, and attorney fees.">
+    <meta name="keywords" content="closing costs, real estate calculator, home purchase costs, title insurance">
+    <title>Closing Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Closing Cost Calculator",
+        "description": "Calculate all closing costs for home purchase including lender, title, and third-party fees",
+        "url": "https://costcalculators.github.io/calculators/closing-cost.html",
+        "applicationCategory": "RealEstateApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Closing Cost Calculator</h1>
+                <p class="calculator-description">Estimate all costs involved in closing a real estate transaction. Includes lender fees, title services, and government charges.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="homePrice">Home Purchase Price ($)</label>
+                            <input type="number" id="homePrice" name="homePrice" placeholder="500000" value="500000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="downPayment">Down Payment (%)</label>
+                            <input type="number" id="downPayment" name="downPayment" placeholder="20" value="20" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="originationFee">Loan Origination Fee (%)</label>
+                            <input type="number" id="originationFee" name="originationFee" placeholder="1" value="1" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="titleInsurance">Title Insurance (Fixed $ or %)</label>
+                            <input type="number" id="titleInsurance" name="titleInsurance" placeholder="0.006" value="0.006" step="0.001" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="appraisalFee">Appraisal Fee ($)</label>
+                            <input type="number" id="appraisalFee" name="appraisalFee" placeholder="600" value="600" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="creditReport">Credit Report / Inspection ($)</label>
+                            <input type="number" id="creditReport" name="creditReport" placeholder="300" value="300" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="attorneyFees">Attorney / Closing Fees ($)</label>
+                            <input type="number" id="attorneyFees" name="attorneyFees" placeholder="800" value="800" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="transferTax">Transfer Tax (%, 0 if not applicable)</label>
+                            <input type="number" id="transferTax" name="transferTax" placeholder="0" value="0" step="0.01" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="recordingFees">Recording & Document Fees ($)</label>
+                            <input type="number" id="recordingFees" name="recordingFees" placeholder="200" value="200" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Loan Amount</h3>
+                            <div class="result-value" id="loanAmount">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Lender Costs</h3>
+                            <div class="result-value" id="lenderCosts">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Third-Party Costs</h3>
+                            <div class="result-value" id="thirdPartyCosts">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Closing Costs</h3>
+                            <div class="result-value" id="totalClosingCosts">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Understanding Closing Costs</h2>
+                    <p>Closing costs are fees and expenses charged when finalizing a real estate purchase. Typically 2-5% of the home purchase price, these must be factored into your total home buying costs.</p>
+                    
+                    <h3>Types of Closing Costs:</h3>
+                    <ul>
+                        <li><strong>Lender Costs:</strong> Origination fees, points, underwriting, processing</li>
+                        <li><strong>Title Costs:</strong> Title search, insurance, escrow services</li>
+                        <li><strong>Government Charges:</strong> Recording fees, transfer taxes, document stamps</li>
+                        <li><strong>Professional Services:</strong> Appraisals, inspections, attorney fees</li>
+                    </ul>
+
+                    <h3>Typical Cost Breakdown:</h3>
+                    <p>Loan-related costs (origination, underwriting) typically comprise 50-60% of total closing costs. Title and insurance services account for 20-30%, with the remainder split among appraisals, inspections, and government fees.</p>
+
+                    <h3>Who Pays Closing Costs?</h3>
+                    <p>Traditionally, the buyer pays most closing costs, but this is negotiable. Sellers often contribute to costs in competitive markets. Some lenders offer "no closing cost" mortgages by rolling fees into the interest rate.</p>
+
+                    <h3>Saving on Closing Costs:</h3>
+                    <p>Shop around with multiple lenders to compare fees. Negotiate with sellers, consider a lender credit, increase your down payment, or look for a lower-cost title company.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ClosingCostCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const homePrice = values.homePrice;
+                        const loanAmount = homePrice * (1 - values.downPayment / 100);
+                        
+                        // Lender costs
+                        const originationFee = loanAmount * (values.originationFee / 100);
+                        
+                        // Title and insurance
+                        const titleInsuranceCost = homePrice * (values.titleInsurance / 100);
+                        
+                        // Government charges
+                        const transferTax = homePrice * (values.transferTax / 100);
+                        
+                        // Third-party costs
+                        const thirdPartyCosts = values.appraisalFee + values.creditReport + values.attorneyFees + values.recordingFees;
+                        
+                        // Total
+                        const lenderCosts = originationFee;
+                        const totalClosingCosts = lenderCosts + titleInsuranceCost + transferTax + thirdPartyCosts;
+                        
+                        document.getElementById('loanAmount').innerHTML = '$' + loanAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('lenderCosts').innerHTML = '$' + (lenderCosts).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('thirdPartyCosts').innerHTML = '$' + thirdPartyCosts.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalClosingCosts').innerHTML = '$' + totalClosingCosts.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalClosingCosts;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new ClosingCostCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home Value Estimator - Estimate your home's current market value based on location, size, and comparable properties.">
+    <meta name="keywords" content="home value, property estimator, home appraisal, real estate value">
+    <title>Home Value Estimator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Home Value Estimator",
+        "description": "Estimate home market value based on property characteristics and market data",
+        "url": "https://costcalculators.github.io/calculators/home-value.html",
+        "applicationCategory": "RealEstateApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Home Value Estimator</h1>
+                <p class="calculator-description">Get a quick estimate of your home's market value. Factor in property size, condition, location, and recent comparable sales.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="basePrice">Base Price (Recent Comparable) ($)</label>
+                            <input type="number" id="basePrice" name="basePrice" placeholder="450000" value="450000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="squareFeet">Square Footage (Current)</label>
+                            <input type="number" id="squareFeet" name="squareFeet" placeholder="2500" value="2500" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="baseSquareFeet">Square Footage (Comparable)</label>
+                            <input type="number" id="baseSquareFeet" name="baseSquareFeet" placeholder="2400" value="2400" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="pricePerSqFt">Price Per Square Foot Adjustment (%)</label>
+                            <input type="number" id="pricePerSqFt" name="pricePerSqFt" placeholder="0" value="0" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="condition">Property Condition</label>
+                            <select id="condition" name="condition" data-calculate>
+                                <option value="-15">Poor (-15%)</option>
+                                <option value="-7">Fair (-7%)</option>
+                                <option value="0" selected>Average (0%)</option>
+                                <option value="7">Good (+7%)</option>
+                                <option value="15">Excellent (+15%)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="marketTrend">Market Trend (%)</label>
+                            <input type="number" id="marketTrend" name="marketTrend" placeholder="3" value="3" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="bedrooms">Number of Bedrooms</label>
+                            <input type="number" id="bedrooms" name="bedrooms" placeholder="4" value="4" min="1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="bathrooms">Number of Bathrooms</label>
+                            <input type="number" id="bathrooms" name="bathrooms" placeholder="2" value="2" min="0" step="0.5" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Estimated Home Value</h3>
+                            <div class="result-value" id="estimatedValue">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Price Per Square Foot</h3>
+                            <div class="result-value" id="pricePerSqFtResult">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Value Range (Low)</h3>
+                            <div class="result-value" id="lowRange">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Value Range (High)</h3>
+                            <div class="result-value" id="highRange">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>How Home Values Are Estimated</h2>
+                    <p>Professional appraisers use multiple methods to estimate home values. This calculator uses the market comparison approach, the most common method for residential properties.</p>
+                    
+                    <h3>Valuation Factors:</h3>
+                    <ul>
+                        <li><strong>Comparable Sales:</strong> Recent sales of similar properties nearby</li>
+                        <li><strong>Square Footage:</strong> Size adjustments based on price per square foot</li>
+                        <li><strong>Property Condition:</strong> Repairs needed or exceptional updates</li>
+                        <li><strong>Market Trends:</strong> Local appreciation or depreciation</li>
+                        <li><strong>Features:</strong> Bedrooms, bathrooms, and special amenities</li>
+                    </ul>
+
+                    <h3>Comparable Sales (Comps):</h3>
+                    <p>The most reliable approach uses recent sales of similar homes in your area. Look for properties that sold within the last 3-6 months and are similar in size, condition, and location.</p>
+
+                    <h3>Market Appreciation:</h3>
+                    <p>Real estate markets appreciate at different rates depending on location. National average is 3-4% annually, but can vary from -5% to +10% depending on local economic conditions.</p>
+
+                    <h3>When to Get a Professional Appraisal:</h3>
+                    <p>This calculator provides an estimate. For refinancing, mortgage applications, estate planning, or major financial decisions, hire a licensed professional appraiser.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class HomeValueCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const basePrice = values.basePrice;
+                        const baseSqFt = values.baseSquareFeet;
+                        const currentSqFt = values.squareFeet;
+                        const pricePerSqFt = basePrice / baseSqFt;
+                        
+                        // Adjust for size differences
+                        let adjustedValue = pricePerSqFt * currentSqFt;
+                        
+                        // Adjust for condition
+                        adjustedValue = adjustedValue * (1 + values.condition / 100);
+                        
+                        // Adjust for market trend
+                        adjustedValue = adjustedValue * (1 + values.marketTrend / 100);
+                        
+                        // Adjust for price per sqft changes
+                        adjustedValue = adjustedValue * (1 + values.pricePerSqFt / 100);
+                        
+                        // Calculate value range (±7%)
+                        const lowRange = adjustedValue * 0.93;
+                        const highRange = adjustedValue * 1.07;
+                        
+                        document.getElementById('pricePerSqFtResult').innerHTML = '$' + pricePerSqFt.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('lowRange').innerHTML = '$' + lowRange.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('highRange').innerHTML = '$' + highRange.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return adjustedValue;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('estimatedValue');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    resultElement.parentElement.style.animation = 'pulse 0.6s ease-out';
+                }
+            }
+        }
+
+        const calculator = new HomeValueCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

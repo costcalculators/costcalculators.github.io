@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Asphalt Driveway Cost Calculator - Estimate costs for asphalt paving, resurfacing, and repairs.">
+    <meta name="keywords" content="asphalt calculator, driveway cost, asphalt paving, resurfacing">
+    <title>Asphalt Driveway Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Asphalt Driveway Cost Calculator",
+        "description": "Calculate asphalt paving costs for driveways and parking lots including materials and labor",
+        "url": "https://costcalculators.github.io/calculators/asphalt.html",
+        "applicationCategory": "HomeImprovementApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Asphalt Driveway Cost Calculator</h1>
+                <p class="calculator-description">Calculate the cost to install, resurface, or repair an asphalt driveway including materials and professional labor.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="length">Driveway Length (Feet)</label>
+                            <input type="number" id="length" name="length" placeholder="50" value="50" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="width">Driveway Width (Feet)</label>
+                            <input type="number" id="width" name="width" placeholder="20" value="20" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="projectType">Project Type</label>
+                            <select id="projectType" name="projectType" data-calculate>
+                                <option value="new">New Installation</option>
+                                <option value="resurface" selected>Resurface/Overlay</option>
+                                <option value="repair">Repairs & Patching</option>
+                                <option value="seal">Seal Coating Only</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="asphaltThickness">Asphalt Thickness (Inches)</label>
+                            <select id="asphaltThickness" name="asphaltThickness" data-calculate>
+                                <option value="2">2 inches (Overlay)</option>
+                                <option value="3" selected>3 inches (Standard)</option>
+                                <option value="4">4 inches (Heavy Duty)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="costPerSquare">Cost per 100 Sq Ft ($)</label>
+                            <input type="number" id="costPerSquare" name="costPerSquare" placeholder="50" value="50" step="5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="labourPerSquare">Labour per 100 Sq Ft ($)</label>
+                            <input type="number" id="labourPerSquare" name="labourPerSquare" placeholder="30" value="30" step="5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="additionalWork">Additional Work (Grading, Prep) ($)</label>
+                            <input type="number" id="additionalWork" name="additionalWork" placeholder="500" value="500" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Square Footage</h3>
+                            <div class="result-value" id="squareFeet">0</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Material Cost</h3>
+                            <div class="result-value" id="materialCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Labour Cost</h3>
+                            <div class="result-value" id="labourCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Asphalt Driveway Costs & Maintenance</h2>
+                    <p>Asphalt is a popular, cost-effective driveway material. New installation typically costs $3-6 per square foot, while resurfacing costs $1.50-3 per square foot.</p>
+                    
+                    <h3>Project Types:</h3>
+                    <ul>
+                        <li><strong>New Installation:</strong> Base preparation plus 3-4 inches asphalt. Cost: $3-6/sq ft</li>
+                        <li><strong>Resurface/Overlay:</strong> Add 2-3 inch layer over existing. Cost: $1.50-3/sq ft</li>
+                        <li><strong>Patch Repairs:</strong> Fill holes and cracks. Cost: $10-20 per patch</li>
+                        <li><strong>Seal Coating:</strong> Protective sealant. Cost: $0.15-0.30/sq ft</li>
+                    </ul>
+
+                    <h3>Asphalt Thickness:</h3>
+                    <ul>
+                        <li><strong>2 inches:</strong> Adequate for overlay over existing base</li>
+                        <li><strong>3 inches:</strong> Standard residential driveway</li>
+                        <li><strong>4 inches:</strong> Heavy-duty, commercial, truck traffic</li>
+                    </ul>
+
+                    <h3>Asphalt Maintenance Schedule:</h3>
+                    <ul>
+                        <li><strong>Seal Coating:</strong> Every 2-3 years ($0.15-0.30/sq ft)</li>
+                        <li><strong>Crack Filling:</strong> Annually, as needed</li>
+                        <li><strong>Patching:</strong> When holes appear</li>
+                        <li><strong>Resurfacing:</strong> Every 15-20 years</li>
+                        <li><strong>Full Replacement:</strong> Every 25-30 years</li>
+                    </ul>
+
+                    <h3>Regional Cost Variations:</h3>
+                    <p>Asphalt costs vary by region and season. Northern climates may cost 10-20% more due to weather demands. Summer is peak season with potential premium pricing.</p>
+
+                    <h3>Extend Asphalt Life:</h3>
+                    <p>Proper maintenance significantly extends driveway life. Seal coating every 2-3 years prevents water damage and adds 5-10 years to driveway life.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class AsphaltCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const squareFeet = values.length * values.width;
+                        const squares = squareFeet / 100;
+                        
+                        const materialCost = squares * values.costPerSquare;
+                        const labourCost = squares * values.labourPerSquare;
+                        const totalCost = materialCost + labourCost + values.additionalWork;
+                        
+                        document.getElementById('squareFeet').innerHTML = squareFeet.toFixed(0);
+                        document.getElementById('materialCost').innerHTML = '$' + materialCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('labourCost').innerHTML = '$' + labourCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new AsphaltCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Roof Cost Calculator - Estimate costs for roof replacement, repair, and installation by material type.">
+    <meta name="keywords" content="roof calculator, roofing cost, roof replacement, roofing materials">
+    <title>Roof Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Roof Cost Calculator",
+        "description": "Calculate roofing material costs and installation labor for roof replacement and repairs",
+        "url": "https://costcalculators.github.io/calculators/roof.html",
+        "applicationCategory": "HomeImprovementApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Roof Cost Calculator</h1>
+                <p class="calculator-description">Calculate roofing material and labor costs for replacement or new installation. Compare different roofing materials.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="roofArea">Roof Area (Square Feet)</label>
+                            <input type="number" id="roofArea" name="roofArea" placeholder="2000" value="2000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="roofMaterial">Roofing Material Type</label>
+                            <select id="roofMaterial" name="roofMaterial" data-calculate>
+                                <option value="asphalt">Asphalt Shingles ($3-5/sq ft)</option>
+                                <option value="metal" selected>Metal Roofing ($6-12/sq ft)</option>
+                                <option value="tile">Ceramic Tile ($10-18/sq ft)</option>
+                                <option value="slate">Slate ($15-30/sq ft)</option>
+                                <option value="wood">Wood Shakes ($6-15/sq ft)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="materialCostPerSqFt">Material Cost per Sq Ft ($)</label>
+                            <input type="number" id="materialCostPerSqFt" name="materialCostPerSqFt" placeholder="8" value="8" step="0.5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="laborCostPerSqFt">Labour Cost per Sq Ft ($)</label>
+                            <input type="number" id="laborCostPerSqFt" name="laborCostPerSqFt" placeholder="3" value="3" step="0.5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="roofPitch">Roof Pitch</label>
+                            <select id="roofPitch" name="roofPitch" data-calculate>
+                                <option value="1">Flat (1:12)</option>
+                                <option value="1.2" selected>Low (4:12)</option>
+                                <option value="1.4">Medium (6:12)</option>
+                                <option value="1.6">Steep (8:12+)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="projectType">Project Type</label>
+                            <select id="projectType" name="projectType" data-calculate>
+                                <option value="new">New Installation</option>
+                                <option value="replacement" selected>Complete Replacement</option>
+                                <option value="repair">Repair/Partial</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="oldRoofRemoval">Remove Old Roof ($)</label>
+                            <input type="number" id="oldRoofRemoval" name="oldRoofRemoval" placeholder="0" value="0" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="underlayment">Underlayment & Extras ($)</label>
+                            <input type="number" id="underlayment" name="underlayment" placeholder="500" value="500" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Adjusted Roof Area</h3>
+                            <div class="result-value" id="adjustedArea">0 sq ft</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Material Cost</h3>
+                            <div class="result-value" id="materialCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Labour Cost</h3>
+                            <div class="result-value" id="labourCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Roofing Material Comparison</h2>
+                    <p>Roofing costs vary significantly by material. Budget $8,000-$25,000 for an average residential roof replacement depending on material and complexity.</p>
+                    
+                    <h3>Material Types & Lifespan:</h3>
+                    <ul>
+                        <li><strong>Asphalt Shingles:</strong> $3-5/sq ft, 15-20 year lifespan. Most common, affordable option.</li>
+                        <li><strong>Metal Roofing:</strong> $6-12/sq ft, 40-70 year lifespan. Durable, energy-efficient, lighter weight.</li>
+                        <li><strong>Ceramic Tile:</strong> $10-18/sq ft, 50-100+ year lifespan. Premium, luxury, heavy (requires reinforcement).</li>
+                        <li><strong>Slate:</strong> $15-30/sq ft, 100+ year lifespan. Extremely durable but very heavy and expensive.</li>
+                        <li><strong>Wood Shakes:</strong> $6-15/sq ft, 20-40 year lifespan. Attractive but requires maintenance, fire risk.</li>
+                    </ul>
+
+                    <h3>Roof Pitch Impact:</h3>
+                    <p>Steeper roofs cost more to install due to increased labor complexity and safety requirements. A 12:12 pitch (45°) roof costs 25-50% more than a flat roof to install.</p>
+
+                    <h3>Removal & Disposal:</h3>
+                    <p>Old roof removal typically costs $1-2/sq ft depending on material and roof complexity. Asphalt shingles are cheaper to remove than tile or slate.</p>
+
+                    <h3>When to Replace Your Roof:</h3>
+                    <ul>
+                        <li>Curling or missing shingles</li>
+                        <li>Algae growth or dark streaks</li>
+                        <li>Granules in gutters</li>
+                        <li>Sagging roof sections</li>
+                        <li>Leaks or interior water damage</li>
+                        <li>Roof age approaching lifespan end</li>
+                    </ul>
+
+                    <h3>Cost vs. Durability:</h3>
+                    <p>While asphalt is cheapest upfront, metal or tile offer better long-term value due to longer lifespan. Calculate 30-year costs to compare true value.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class RoofCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        // Adjust area for pitch
+                        const adjustedArea = values.roofArea * values.roofPitch;
+                        
+                        const materialCost = adjustedArea * values.materialCostPerSqFt;
+                        const labourCost = adjustedArea * values.laborCostPerSqFt;
+                        const totalCost = materialCost + labourCost + values.oldRoofRemoval + values.underlayment;
+                        
+                        document.getElementById('adjustedArea').innerHTML = adjustedArea.toFixed(0) + ' sq ft';
+                        document.getElementById('materialCost').innerHTML = '$' + materialCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('labourCost').innerHTML = '$' + labourCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new RoofCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Relocation Cost Calculator - Calculate moving costs, temporary housing, and relocation expenses.">
+    <meta name="keywords" content="relocation calculator, moving costs, moving expenses, relocation budget">
+    <title>Relocation Cost Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Relocation Cost Calculator",
+        "description": "Calculate total relocation and moving costs including transportation, temporary housing, and adjustment",
+        "url": "https://costcalculators.github.io/calculators/relocation.html",
+        "applicationCategory": "TravelApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Relocation Cost Calculator</h1>
+                <p class="calculator-description">Calculate all costs associated with relocating including moving, temporary housing, travel, and adjustment expenses.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="moveType">Type of Move</label>
+                            <select id="moveType" name="moveType" data-calculate>
+                                <option value="local">Local (Same City)</option>
+                                <option value="regional" selected>Regional (Same State)</option>
+                                <option value="national">National (Different State)</option>
+                                <option value="international">International</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="distance">Distance (Miles)</label>
+                            <input type="number" id="distance" name="distance" placeholder="500" value="500" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="householdSize">Household Size (# of People)</label>
+                            <input type="number" id="householdSize" name="householdSize" placeholder="4" value="4" min="1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="movingCost">Professional Moving Cost ($)</label>
+                            <input type="number" id="movingCost" name="movingCost" placeholder="5000" value="5000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="tempHousing">Temporary Housing Duration (Days)</label>
+                            <input type="number" id="tempHousing" name="tempHousing" placeholder="30" value="30" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dailyHousingCost">Daily Housing Cost ($)</label>
+                            <input type="number" id="dailyHousingCost" name="dailyHousingCost" placeholder="150" value="150" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="travelCost">Travel & Transportation ($)</label>
+                            <input type="number" id="travelCost" name="travelCost" placeholder="2000" value="2000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="otherExpenses">Other Expenses - Utilities, Deposits, etc ($)</label>
+                            <input type="number" id="otherExpenses" name="otherExpenses" placeholder="3000" value="3000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="employerAssistance">Employer Reimbursement (%)</label>
+                            <input type="number" id="employerAssistance" name="employerAssistance" placeholder="50" value="50" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Moving & Transport</h3>
+                            <div class="result-value" id="movingTotal">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Temporary Housing</h3>
+                            <div class="result-value" id="housingTotal">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Relocation Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Your Out-of-Pocket Cost</h3>
+                            <div class="result-value" id="yourCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Relocation Costs Breakdown</h2>
+                    <p>Relocating involves many expenses beyond just the moving truck. Budget for temporary housing, travel, utilities setup, and adjustment costs to avoid surprises.</p>
+                    
+                    <h3>Major Cost Categories:</h3>
+                    <ul>
+                        <li><strong>Moving Services:</strong> Professional movers, equipment rental, packing supplies</li>
+                        <li><strong>Temporary Housing:</strong> Hotels, rentals, or corporate housing</li>
+                        <li><strong>Travel:</strong> Airfare, gas, meals during relocation</li>
+                        <li><strong>Setup Costs:</strong> Utility deposits, furniture, new home purchases</li>
+                    </ul>
+
+                    <h3>Professional Moving Costs:</h3>
+                    <p>Average costs are $2,500-$5,000 for local moves and $5,000-$15,000+ for long-distance moves. Costs depend on distance, volume of items, and time of year.</p>
+
+                    <h3>Temporary Housing Options:</h3>
+                    <p>Options include hotels ($100-300+ per night), corporate housing ($1,500-4,000+ per month), short-term rentals, or staying with family/friends.</p>
+
+                    <h3>Tax Deductions & Reimbursements:</h3>
+                    <p>Check if your employer offers relocation assistance. Some moving and relocation costs may be tax-deductible if for a job transfer (specific criteria apply).</p>
+
+                    <h3>Tips to Reduce Relocation Costs:</h3>
+                    <ul>
+                        <li>Get multiple moving quotes</li>
+                        <li>Move during off-season (avoid peak summer)</li>
+                        <li>Downsize belongings before moving</li>
+                        <li>Negotiate employer relocation packages</li>
+                        <li>Use tax deductions where applicable</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class RelocationCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const movingTotal = values.movingCost + values.travelCost;
+                        const housingTotal = values.tempHousing * values.dailyHousingCost;
+                        const totalCost = movingTotal + housingTotal + values.otherExpenses;
+                        const reimbursement = totalCost * (values.employerAssistance / 100);
+                        const yourCost = totalCost - reimbursement;
+                        
+                        document.getElementById('movingTotal').innerHTML = '$' + movingTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('housingTotal').innerHTML = '$' + housingTotal.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('yourCost').innerHTML = '$' + yourCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalCost;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new RelocationCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

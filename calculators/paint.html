@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Paint Calculator - Calculate how much paint you need for your walls and ceilings. Includes cost estimation.">
+    <meta name="keywords" content="paint calculator, paint estimation, painting costs, square footage">
+    <title>Paint Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Paint Calculator",
+        "description": "Calculate paint needed for interior and exterior painting projects with cost estimates",
+        "url": "https://costcalculators.github.io/calculators/paint.html",
+        "applicationCategory": "HomeImprovementApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Paint Calculator</h1>
+                <p class="calculator-description">Calculate exactly how much paint you need for your project. Includes multiple room options and cost estimation.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="squareFeet">Total Square Footage to Paint</label>
+                            <input type="number" id="squareFeet" name="squareFeet" placeholder="2000" value="2000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="coats">Number of Coats</label>
+                            <select id="coats" name="coats" data-calculate>
+                                <option value="1">1 Coat</option>
+                                <option value="2" selected>2 Coats (Recommended)</option>
+                                <option value="3">3 Coats</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="surfaceType">Surface Type</label>
+                            <select id="surfaceType" name="surfaceType" data-calculate>
+                                <option value="smooth">Smooth Walls</option>
+                                <option value="textured" selected>Textured/Drywall</option>
+                                <option value="popcorn">Popcorn Ceiling</option>
+                                <option value="exterior">Exterior (Rough)</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="paintType">Paint Type</label>
+                            <select id="paintType" name="paintType" data-calculate>
+                                <option value="interior">Interior Paint</option>
+                                <option value="exterior">Exterior Paint</option>
+                                <option value="primer">Primer Only</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="pricePerGallon">Paint Price per Gallon ($)</label>
+                            <input type="number" id="pricePerGallon" name="pricePerGallon" placeholder="35" value="35" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="laborCost">Labor Cost (if professional) ($)</label>
+                            <input type="number" id="laborCost" name="laborCost" placeholder="0" value="0" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Gallons Needed</h3>
+                            <div class="result-value" id="gallonsNeeded">0</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Paint Cost</h3>
+                            <div class="result-value" id="paintCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Labor Cost</h3>
+                            <div class="result-value" id="laborDisplay">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Paint Coverage Guide</h2>
+                    <p>Most interior paints cover 250-400 square feet per gallon depending on surface texture and number of coats. This calculator adjusts for surface type automatically.</p>
+                    
+                    <h3>Coverage by Surface:</h3>
+                    <ul>
+                        <li><strong>Smooth Walls:</strong> 350-400 sq ft per gallon</li>
+                        <li><strong>Textured Drywall:</strong> 300-350 sq ft per gallon</li>
+                        <li><strong>Popcorn Ceiling:</strong> 200-250 sq ft per gallon</li>
+                        <li><strong>Exterior Rough:</strong> 200-300 sq ft per gallon</li>
+                    </ul>
+
+                    <h3>Number of Coats:</h3>
+                    <p><strong>1 Coat:</strong> Good for touch-ups and repaints of same color. <strong>2 Coats:</strong> Standard for fresh colors and new surfaces. <strong>3+ Coats:</strong> For dramatic color changes or poor coverage.</p>
+
+                    <h3>Paint Types & Costs:</h3>
+                    <ul>
+                        <li><strong>Budget Paint:</strong> $15-25/gallon (thin, more coats needed)</li>
+                        <li><strong>Standard Paint:</strong> $25-40/gallon (good quality, recommended)</li>
+                        <li><strong>Premium Paint:</strong> $40-70/gallon (excellent durability, covers better)</li>
+                        <li><strong>Specialty Paint:</strong> $50-100/gallon (mildew-resistant, textured, etc)</li>
+                    </ul>
+
+                    <h3>Professional Painting Labor:</h3>
+                    <p>Professional painters typically charge $2-6 per square foot or $50-150 per hour. Prices vary by region, project complexity, and painter experience.</p>
+
+                    <h3>Money-Saving Tips:</h3>
+                    <ul>
+                        <li>Buy paint in bulk for discounts</li>
+                        <li>DIY when possible to save 50%+ on labor</li>
+                        <li>Prime before painting for better coverage</li>
+                        <li>Paint in moderate temperatures for best results</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class PaintCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        // Coverage adjustments by surface type
+                        const coverageByType = {
+                            'smooth': 375,
+                            'textured': 325,
+                            'popcorn': 225,
+                            'exterior': 250
+                        };
+                        
+                        const coverage = coverageByType[values.surfaceType] || 350;
+                        const gallonsPerCoat = values.squareFeet / coverage;
+                        const totalGallons = Math.ceil(gallonsPerCoat * values.coats);
+                        
+                        const paintCost = totalGallons * values.pricePerGallon;
+                        const totalCost = paintCost + values.laborCost;
+                        
+                        document.getElementById('gallonsNeeded').innerHTML = totalGallons;
+                        document.getElementById('paintCost').innerHTML = '$' + paintCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('laborDisplay').innerHTML = '$' + values.laborCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return totalGallons;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new PaintCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

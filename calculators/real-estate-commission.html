@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real Estate Commission Calculator - Calculate realtor commissions and net proceeds from home sales.">
+    <meta name="keywords" content="real estate commission, realtor fee, home sale calculator">
+    <title>Real Estate Commission Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Real Estate Commission Calculator",
+        "description": "Calculate realtor commissions and net proceeds from home sales",
+        "url": "https://costcalculators.github.io/calculators/real-estate-commission.html",
+        "applicationCategory": "RealEstateApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Real Estate Commission Calculator</h1>
+                <p class="calculator-description">Calculate realtor commissions, seller's and buyer's agent fees, and your net proceeds from a home sale.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="salePrice">Home Sale Price ($)</label>
+                            <input type="number" id="salePrice" name="salePrice" placeholder="500000" value="500000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="buyerCommission">Buyer's Agent Commission (%)</label>
+                            <input type="number" id="buyerCommission" name="buyerCommission" placeholder="2.5" value="2.5" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="sellerCommission">Seller's Agent Commission (%)</label>
+                            <input type="number" id="sellerCommission" name="sellerCommission" placeholder="2.5" value="2.5" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="brokerFee">Broker Desk Fee ($)</label>
+                            <input type="number" id="brokerFee" name="brokerFee" placeholder="0" value="0" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="closingCosts">Other Closing Costs ($)</label>
+                            <input type="number" id="closingCosts" name="closingCosts" placeholder="5000" value="5000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="mortgageBalance">Remaining Mortgage Balance ($)</label>
+                            <input type="number" id="mortgageBalance" name="mortgageBalance" placeholder="250000" value="250000" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Buyer's Agent Commission</h3>
+                            <div class="result-value" id="buyerAgentFee">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Seller's Agent Commission</h3>
+                            <div class="result-value" id="sellerAgentFee">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Commissions Paid</h3>
+                            <div class="result-value" id="totalCommission">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Net Proceeds</h3>
+                            <div class="result-value" id="netProceeds">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Real Estate Commission Explained</h2>
+                    <p>Real estate commissions are fees paid to agents and brokers for facilitating property sales. The amount is typically negotiable and varies by market, agent, and property type.</p>
+                    
+                    <h3>How Commissions Work:</h3>
+                    <ul>
+                        <li><strong>Split Commission:</strong> Usually 5-6% total, split between buyer's and seller's agents</li>
+                        <li><strong>Negotiable:</strong> Commission rates are not fixed and can be negotiated</li>
+                        <li><strong>Seller Pays:</strong> Traditionally, the seller pays both commissions from sale proceeds</li>
+                        <li><strong>Typical Split:</strong> 50% to seller's agent, 50% to buyer's agent</li>
+                    </ul>
+
+                    <h3>Impact on Net Proceeds:</h3>
+                    <p>Commissions can significantly impact your net proceeds. A 1% difference on a $500,000 home means $5,000. Always negotiate commission rates before listing.</p>
+
+                    <h3>Other Seller Costs:</h3>
+                    <p>Beyond commissions, sellers also pay closing costs, transfer taxes, title insurance, and potentially seller concessions. These should all be factored into net proceeds calculations.</p>
+
+                    <h3>When to Use a Discount Broker:</h3>
+                    <p>Discount brokers may charge 1-2% commission instead of the traditional 5-6%. This can save significant money on high-value properties.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class RealEstateCommissionCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const salePrice = values.salePrice;
+                        
+                        const buyerAgentFee = salePrice * (values.buyerCommission / 100);
+                        const sellerAgentFee = salePrice * (values.sellerCommission / 100);
+                        const totalCommission = buyerAgentFee + sellerAgentFee + values.brokerFee;
+                        
+                        const netProceeds = salePrice - totalCommission - values.closingCosts - values.mortgageBalance;
+                        
+                        document.getElementById('buyerAgentFee').innerHTML = '$' + buyerAgentFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('sellerAgentFee').innerHTML = '$' + sellerAgentFee.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCommission').innerHTML = '$' + totalCommission.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('netProceeds').innerHTML = '$' + netProceeds.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return netProceeds;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new RealEstateCommissionCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

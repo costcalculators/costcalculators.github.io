@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student Loan Calculator - Calculate monthly payments, interest costs, and repayment timelines for federal and private student loans.">
+    <meta name="keywords" content="student loan calculator, loan payment, education costs, federal loans">
+    <title>Student Loan Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Student Loan Calculator",
+        "description": "Calculate monthly payments and interest costs for student loans with various repayment plans",
+        "url": "https://costcalculators.github.io/calculators/student-loan.html",
+        "applicationCategory": "FinanceApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Student Loan Calculator</h1>
+                <p class="calculator-description">Calculate your student loan monthly payments, total interest paid, and loan payoff timeline. Compare repayment plans and understand your education debt.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="loanAmount">Total Loan Amount ($)</label>
+                            <input type="number" id="loanAmount" name="loanAmount" placeholder="50000" value="50000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="interestRate">Annual Interest Rate (%)</label>
+                            <input type="number" id="interestRate" name="interestRate" placeholder="5.5" value="5.5" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="repaymentPlan">Repayment Plan</label>
+                            <select id="repaymentPlan" name="repaymentPlan" data-calculate>
+                                <option value="10">10-Year Standard</option>
+                                <option value="20">20-Year Extended</option>
+                                <option value="25">25-Year Graduated</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="gracePeriod">Grace Period (Months)</label>
+                            <input type="number" id="gracePeriod" name="gracePeriod" placeholder="6" value="6" min="0" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="extraPayment">Extra Monthly Payment ($)</label>
+                            <input type="number" id="extraPayment" name="extraPayment" placeholder="0" value="0" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Monthly Payment</h3>
+                            <div class="result-value" id="monthlyPayment">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Interest Paid</h3>
+                            <div class="result-value" id="totalInterest">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Payoff Date</h3>
+                            <div class="result-value" id="payoffDate">N/A</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Savings with Extra Payment</h3>
+                            <div class="result-value" id="savings">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Student Loan Repayment Strategies</h2>
+                    <p>Understanding your student loan options can help you manage education debt more effectively. Different repayment plans suit different financial situations.</p>
+                    
+                    <h3>Common Repayment Plans:</h3>
+                    <ul>
+                        <li><strong>Standard 10-Year Plan:</strong> Fixed payments over 10 years. Good for regular income earners wanting to pay off quickly.</li>
+                        <li><strong>Extended 20-Year Plan:</strong> Lower monthly payments spread over longer period. Ideal if cash flow is tight.</li>
+                        <li><strong>Graduated Plan:</strong> Payments start low and increase every 2 years. Matches income growth over time.</li>
+                    </ul>
+
+                    <h3>Federal vs. Private Loans:</h3>
+                    <p><strong>Federal Loans:</strong> Often have lower interest rates, flexible repayment options, income-driven plans, and forgiveness programs. Interest rates typically 4.5%-8.5%.</p>
+                    <p><strong>Private Loans:</strong> May offer competitive rates for creditworthy borrowers but fewer protections and repayment flexibility. Rates typically 3.5%-12%+.</p>
+
+                    <h3>Acceleration Strategy:</h3>
+                    <p>Making extra payments toward principal can significantly reduce total interest paid and years to payoff. Even small extra payments add up over time.</p>
+
+                    <h3>Loan Consolidation:</h3>
+                    <p>Consolidating multiple loans into one can simplify payments and potentially lower your interest rate, though it may extend your repayment timeline.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class StudentLoanCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const principal = values.loanAmount;
+                        const monthlyRate = values.interestRate / 100 / 12;
+                        const monthsToRepay = values.repaymentPlan * 12;
+                        
+                        let monthlyPayment = 0;
+                        if (monthlyRate === 0) {
+                            monthlyPayment = principal / monthsToRepay;
+                        } else {
+                            monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, monthsToRepay)) / (Math.pow(1 + monthlyRate, monthsToRepay) - 1);
+                        }
+                        
+                        const totalPaid = monthlyPayment * monthsToRepay;
+                        const totalInterest = totalPaid - principal;
+                        
+                        // Calculate with extra payments
+                        const totalWithExtra = monthlyPayment + values.extraPayment;
+                        let balance = principal;
+                        let monthsPaid = values.gracePeriod;
+                        let totalInterestWithExtra = 0;
+                        
+                        while (balance > 0 && monthsPaid < monthsToRepay * 1.5) {
+                            const interest = balance * monthlyRate;
+                            totalInterestWithExtra += interest;
+                            balance -= (totalWithExtra - interest);
+                            monthsPaid++;
+                            if (balance < 0) balance = 0;
+                        }
+                        
+                        const savings = totalInterest - totalInterestWithExtra;
+                        const payoffDate = new Date();
+                        payoffDate.setMonth(payoffDate.getMonth() + monthsToRepay + values.gracePeriod);
+                        
+                        document.getElementById('totalInterest').innerHTML = '$' + totalInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('savings').innerHTML = '$' + savings.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('payoffDate').innerHTML = payoffDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+                        
+                        return monthlyPayment;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('monthlyPayment');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    resultElement.parentElement.style.animation = 'pulse 0.6s ease-out';
+                }
+            }
+        }
+
+        const calculator = new StudentLoanCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

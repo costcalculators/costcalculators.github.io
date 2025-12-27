@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Concrete Calculator - Calculate concrete needed for driveways, patios, slabs, and foundations. Includes cost estimates.">
+    <meta name="keywords" content="concrete calculator, concrete estimate, concrete cost, cubic yards">
+    <title>Concrete Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Concrete Calculator",
+        "description": "Calculate concrete materials needed for slabs, driveways, and foundations with cost estimation",
+        "url": "https://costcalculators.github.io/calculators/concrete.html",
+        "applicationCategory": "HomeImprovementApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Concrete Calculator</h1>
+                <p class="calculator-description">Calculate the exact amount of concrete needed for your project and estimate total costs including labor.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="length">Length (Feet)</label>
+                            <input type="number" id="length" name="length" placeholder="20" value="20" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="width">Width (Feet)</label>
+                            <input type="number" id="width" name="width" placeholder="15" value="15" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="thickness">Thickness (Inches)</label>
+                            <input type="number" id="thickness" name="thickness" placeholder="4" value="4" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="projectType">Project Type</label>
+                            <select id="projectType" name="projectType" data-calculate>
+                                <option value="driveway">Driveway</option>
+                                <option value="patio" selected>Patio</option>
+                                <option value="foundation">Foundation</option>
+                                <option value="walkway">Walkway</option>
+                                <option value="pool">Pool Deck</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="concreteType">Concrete Type/Quality</label>
+                            <select id="concreteType" name="concreteType" data-calculate>
+                                <option value="standard">Standard (3000 PSI)</option>
+                                <option value="heavy" selected>Heavy Duty (4000 PSI)</option>
+                                <option value="decorative">Decorative/Stamped</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="pricePerCubicYard">Price per Cubic Yard ($)</label>
+                            <input type="number" id="pricePerCubicYard" name="pricePerCubicYard" placeholder="150" value="150" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="laborCostPerSqFt">Labor Cost per Sq Ft ($)</label>
+                            <input type="number" id="laborCostPerSqFt" name="laborCostPerSqFt" placeholder="2" value="2" step="0.25" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="additionalCosts">Additional Costs (Rebar, Sealant, etc) ($)</label>
+                            <input type="number" id="additionalCosts" name="additionalCosts" placeholder="0" value="0" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Square Footage</h3>
+                            <div class="result-value" id="squareFeet">0</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Cubic Yards Needed</h3>
+                            <div class="result-value" id="cubicYards">0</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Material Cost</h3>
+                            <div class="result-value" id="materialCost">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Project Cost</h3>
+                            <div class="result-value" id="totalCost">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>Concrete Project Planning</h2>
+                    <p>Concrete is measured in cubic yards. One cubic yard covers 81 square feet at 4 inches thick. This calculator automatically converts your measurements.</p>
+                    
+                    <h3>Standard Thickness Guidelines:</h3>
+                    <ul>
+                        <li><strong>Patios & Walkways:</strong> 4 inches (minimum 3-4 inches)</li>
+                        <li><strong>Driveways:</strong> 4-6 inches (heavier use requires more)</li>
+                        <li><strong>Foundations:</strong> 8-12 inches depending on soil and loads</li>
+                        <li><strong>Pool Decks:</strong> 4 inches minimum, often thicker for durability</li>
+                    </ul>
+
+                    <h3>Concrete Strength (PSI):</h3>
+                    <ul>
+                        <li><strong>3000 PSI:</strong> Light-duty, residential, patios</li>
+                        <li><strong>4000 PSI:</strong> Standard driveways, most residential use</li>
+                        <li><strong>5000+ PSI:</strong> Heavy-duty, commercial, high traffic</li>
+                    </ul>
+
+                    <h3>Cost Factors:</h3>
+                    <p>Concrete costs average $120-200 per cubic yard, varying by region and type. Decorative concrete (stamped, colored) costs significantly more. Labor typically adds $2-8 per square foot depending on complexity.</p>
+
+                    <h3>Concrete Care & Maintenance:</h3>
+                    <ul>
+                        <li>Cure for 7 days before heavy use</li>
+                        <li>Seal every 2-3 years for longevity</li>
+                        <li>Avoid salt and harsh chemicals</li>
+                        <li>Fill cracks promptly to prevent spreading</li>
+                    </ul>
+
+                    <h3>Waste Factor:</h3>
+                    <p>Always add 5-10% extra for waste, spillage, and over-excavation. This calculator doesn't include waste—round up when ordering.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class ConcreteCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const squareFeet = values.length * values.width;
+                        const cubicFeet = (values.length * values.width * values.thickness) / 12;
+                        const cubicYards = cubicFeet / 27;
+                        
+                        const materialCost = cubicYards * values.pricePerCubicYard;
+                        const laborCost = squareFeet * values.laborCostPerSqFt;
+                        const totalCost = materialCost + laborCost + values.additionalCosts;
+                        
+                        document.getElementById('squareFeet').innerHTML = squareFeet.toFixed(0);
+                        document.getElementById('cubicYards').innerHTML = cubicYards.toFixed(2);
+                        document.getElementById('materialCost').innerHTML = '$' + materialCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalCost').innerHTML = '$' + totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return cubicYards;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results handled in calculate function
+            }
+        }
+
+        const calculator = new ConcreteCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>
