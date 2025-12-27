@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Cost Calculators - Get in touch with our team for support, feedback, or inquiries about our free calculator tools.">
+    <meta name="keywords" content="contact cost calculators, support, feedback, inquiry, email">
+    <meta name="author" content="Cost Calculators">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Contact Cost Calculators">
+    <meta property="og:description" content="Get in touch with the Cost Calculators team">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://costcalculators.github.io/pages/contact.html">
+    <meta name="theme-color" content="#f5f3f0">
+    
+    <title>Contact Cost Calculators - Get in Touch</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="icon" type="image/png" href="../assets/favicon.png">
+    
+    <!-- ContactPoint Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPoint",
+      "contactType": "Customer Support",
+      "email": "info@costcalculators.io",
+      "url": "https://costcalculators.github.io/pages/contact.html",
+      "availableLanguage": ["en"]
+    }
+    </script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <div id="header-container"></div>
+    
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header-content">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you. Reach out with questions, feedback, or suggestions</p>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="content-section">
+            <h2>Get in Touch</h2>
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <h3>Email</h3>
+                    <p><a href="mailto:info@costcalculators.io">info@costcalculators.io</a></p>
+                    <p class="small-text">For general inquiries and support</p>
+                </div>
+                <div class="contact-info-card">
+                    <h3>Response Time</h3>
+                    <p>We typically respond within 24-48 hours</p>
+                    <p class="small-text">During business days</p>
+                </div>
+                <div class="contact-info-card">
+                    <h3>Support</h3>
+                    <p>Available for all calculator-related questions</p>
+                    <p class="small-text">Technical support and feedback welcome</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="content-section">
+            <h2>Send Us a Message</h2>
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a subject</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="feature">Feature Request</option>
+                        <option value="calculator">Missing Calculator</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us what's on your mind..." rows="6"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <p class="form-note">We read and respond to every message. Thank you for your interest!</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <h3>Are your calculators accurate?</h3>
+                    <p>Yes. All our calculators use industry-standard formulas and current market rates. However, results are estimates and should be verified for official transactions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you charge for calculator access?</h3>
+                    <p>No. All calculators are completely free with no registration, hidden fees, or limitations.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How often are calculators updated?</h3>
+                    <p>We regularly update our tools to reflect current rates and improve accuracy. Check back often for new calculators and enhancements.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I request a custom calculator?</h3>
+                    <p>Send us a message describing the calculator you need, and we'll consider adding it to our collection.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Explore Our Calculators</h2>
+            <p>Browse all 70+ tools and find exactly what you need</p>
+            <a href="/" class="btn btn-primary">Back to Home</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/components.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will respond within 24-48 hours.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
