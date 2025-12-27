@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Debt Payoff Calculator - Calculate how long it takes to pay off debt and create a payoff strategy. Find the best debt repayment plan.">
+    <meta name="keywords" content="debt payoff calculator, credit card debt, debt repayment, debt calculator, payoff calculator">
+    <meta name="author" content="Cost Calculators">
+    <title>Debt Payoff Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Debt Payoff Calculator",
+      "description": "Calculate debt payoff timeline and create an effective debt repayment strategy",
+      "url": "https://costcalculators.github.io/calculators/debt-payoff.html",
+      "applicationCategory": "FinanceApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Debt Payoff Calculator</h1>
+                <p class="calculator-description">Calculate how long it will take to pay off your debt and determine the best payoff strategy.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="debtAmount">Total Debt Amount ($)</label>
+                            <input type="number" id="debtAmount" name="debtAmount" placeholder="10000" value="10000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="interestRate">Annual Interest Rate (%)</label>
+                            <input type="number" id="interestRate" name="interestRate" placeholder="18" value="18" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="monthlyPayment">Monthly Payment ($)</label>
+                            <input type="number" id="monthlyPayment" name="monthlyPayment" placeholder="300" value="300" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="minPayment">Minimum Payment (%)</label>
+                            <input type="number" id="minPayment" name="minPayment" placeholder="2" value="2" step="0.5" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Payoff Time</h3>
+                            <div class="result-value" id="payoffTime">0</div>
+                            <small id="timeUnit">months</small>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Interest Paid</h3>
+                            <div class="result-value" id="totalInterest">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Total Amount Paid</h3>
+                            <div class="result-value" id="totalPaid">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Section -->
+                <div class="calculator-info">
+                    <h2>Debt Payoff Strategies</h2>
+                    <p>Getting out of debt requires a solid strategy. The most important factor is consistency—make regular payments and avoid adding new debt while paying off existing balances.</p>
+                    
+                    <h3>Popular Debt Payoff Methods</h3>
+                    <ul>
+                        <li><strong>Debt Snowball:</strong> Pay smallest debts first for psychological wins, then move to larger debts</li>
+                        <li><strong>Debt Avalanche:</strong> Pay highest interest debts first to save money on interest</li>
+                        <li><strong>Debt Consolidation:</strong> Combine multiple debts into one lower-interest loan</li>
+                        <li><strong>Balance Transfer:</strong> Move high-interest credit card debt to lower-interest card</li>
+                        <li><strong>Negotiation:</strong> Ask creditors to lower interest rates or provide hardship programs</li>
+                    </ul>
+
+                    <h3>Debt Reduction Tips</h3>
+                    <ul>
+                        <li>Create a detailed budget to identify extra funds for debt payoff</li>
+                        <li>Stop using credit while paying off existing debt</li>
+                        <li>Consider side income to accelerate payoff</li>
+                        <li>Make extra payments when possible to reduce interest</li>
+                        <li>Contact creditors if experiencing hardship</li>
+                        <li>Monitor your credit score and credit report</li>
+                    </ul>
+
+                    <h3>Prevention</h3>
+                    <ul>
+                        <li>Build an emergency fund to avoid credit card debt</li>
+                        <li>Use credit cards wisely and pay in full each month</li>
+                        <li>Understand interest rates and fees before borrowing</li>
+                        <li>Maintain good financial habits</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class DebtPayoffCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        let balance = values.debtAmount;
+                        const monthlyRate = values.interestRate / 100 / 12;
+                        const monthlyPayment = values.monthlyPayment;
+                        
+                        let months = 0;
+                        let totalInterest = 0;
+                        
+                        while (balance > 0 && months < 600) {
+                            const interest = balance * monthlyRate;
+                            totalInterest += interest;
+                            balance = balance + interest - monthlyPayment;
+                            months++;
+                        }
+                        
+                        const years = Math.floor(months / 12);
+                        const remainingMonths = months % 12;
+                        
+                        let timeString = '';
+                        if (years > 0) {
+                            timeString = years + ' year' + (years > 1 ? 's' : '');
+                            if (remainingMonths > 0) timeString += ', ' + remainingMonths + ' month' + (remainingMonths > 1 ? 's' : '');
+                        } else {
+                            timeString = remainingMonths + ' month' + (remainingMonths > 1 ? 's' : '');
+                        }
+                        
+                        const totalPaid = values.debtAmount + totalInterest;
+                        
+                        document.getElementById('payoffTime').innerHTML = timeString;
+                        document.getElementById('totalInterest').innerHTML = '$' + totalInterest.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('totalPaid').innerHTML = '$' + totalPaid.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('timeUnit').style.display = 'none';
+                        
+                        return months;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Already displayed in calculate function
+            }
+        }
+
+        const calculator = new DebtPayoffCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

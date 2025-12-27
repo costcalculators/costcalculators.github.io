@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home Affordability Calculator - Determine how much home you can afford based on your income and financial situation. Calculate maximum home price.">
+    <meta name="keywords" content="home affordability calculator, mortgage calculator, how much house can I afford, real estate calculator">
+    <meta name="author" content="Cost Calculators">
+    <title>Home Affordability Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Home Affordability Calculator",
+      "description": "Calculate maximum home price you can afford based on income and financial factors",
+      "url": "https://costcalculators.github.io/calculators/home-affordability.html",
+      "applicationCategory": "FinanceApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Home Affordability Calculator</h1>
+                <p class="calculator-description">Determine the maximum home price you can afford based on your income, debts, and down payment.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="annualIncome">Annual Gross Income ($)</label>
+                            <input type="number" id="annualIncome" name="annualIncome" placeholder="100000" value="100000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="downPaymentPercent">Down Payment (%)</label>
+                            <input type="number" id="downPaymentPercent" name="downPaymentPercent" placeholder="20" value="20" step="5" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="interestRate">Interest Rate (%)</label>
+                            <input type="number" id="interestRate" name="interestRate" placeholder="7" value="7" step="0.1" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="loanTerm">Loan Term (Years)</label>
+                            <select id="loanTerm" name="loanTerm" data-calculate>
+                                <option value="15">15 Years</option>
+                                <option value="20">20 Years</option>
+                                <option value="30" selected>30 Years</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="otherDebts">Other Monthly Debts ($)</label>
+                            <input type="number" id="otherDebts" name="otherDebts" placeholder="500" value="500" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Maximum Home Price</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Maximum Monthly Payment</h3>
+                            <div class="result-value" id="maxPayment">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Debt-to-Income Ratio</h3>
+                            <div class="result-value" id="dtiRatio">0.00%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Section -->
+                <div class="calculator-info">
+                    <h2>Understanding Home Affordability</h2>
+                    <p>Home affordability depends on multiple factors including income, existing debts, credit score, and down payment amount. Lenders typically use debt-to-income ratios to determine loan approval.</p>
+                    
+                    <h3>Key Affordability Metrics</h3>
+                    <ul>
+                        <li><strong>Debt-to-Income Ratio:</strong> Keep below 43% (28% for housing only)</li>
+                        <li><strong>Down Payment:</strong> 20% avoids PMI, but 3-5% options available</li>
+                        <li><strong>Credit Score:</strong> Higher scores get better interest rates</li>
+                        <li><strong>Closing Costs:</strong> Budget 2-5% of home price</li>
+                        <li><strong>Property Taxes:</strong> Vary by location, 0.3-2% of home value annually</li>
+                    </ul>
+
+                    <h3>Hidden Homeownership Costs</h3>
+                    <ul>
+                        <li>Property taxes and insurance (often $300-1000+ monthly)</li>
+                        <li>HOA fees (if applicable)</li>
+                        <li>Maintenance and repairs (budget 1% of home value annually)</li>
+                        <li>Utilities and services</li>
+                        <li>PMI (if down payment less than 20%)</li>
+                    </ul>
+
+                    <h3>Home Buying Tips</h3>
+                    <ul>
+                        <li>Get pre-approved before house hunting</li>
+                        <li>Budget for down payment, closing costs, and inspections</li>
+                        <li>Factor in future maintenance and property tax increases</li>
+                        <li>Consider your long-term financial goals</li>
+                        <li>Leave room in your budget for emergencies and other expenses</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class HomeAffordabilityCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const monthlyIncome = values.annualIncome / 12;
+                        const monthlyDebtRatio = 0.43;
+                        const housingRatio = 0.28;
+                        
+                        const maxMonthlyPayment = (monthlyIncome * housingRatio) - (values.otherDebts || 0);
+                        
+                        const monthlyRate = values.interestRate / 100 / 12;
+                        const numberOfPayments = values.loanTerm * 12;
+                        
+                        // Calculate loan amount from payment
+                        const loanAmount = maxMonthlyPayment / (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) * (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+                        
+                        // Calculate home price from loan amount
+                        const downPaymentPercent = values.downPaymentPercent / 100;
+                        const homePrice = loanAmount / (1 - downPaymentPercent);
+                        
+                        const dti = ((values.otherDebts + maxMonthlyPayment) / monthlyIncome * 100);
+                        
+                        document.getElementById('maxPayment').innerHTML = '$' + maxMonthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('dtiRatio').innerHTML = dti.toFixed(2) + '%';
+                        
+                        return homePrice;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    resultElement.parentElement.style.animation = 'pulse 0.6s ease-out';
+                }
+            }
+        }
+
+        const calculator = new HomeAffordabilityCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Salary Calculator - Convert annual salary to hourly rate, calculate take-home pay, and understand compensation. Compare salary to hourly wages.">
+    <meta name="keywords" content="salary calculator, hourly rate calculator, salary converter, take-home pay, wage calculator">
+    <meta name="author" content="Cost Calculators">
+    <title>Salary Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Salary Calculator",
+      "description": "Calculate hourly rate from annual salary and convert between different pay periods",
+      "url": "https://costcalculators.github.io/calculators/salary-calculator.html",
+      "applicationCategory": "FinanceApplication"
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Salary Calculator</h1>
+                <p class="calculator-description">Convert between annual salary, hourly rate, and other pay periods. Calculate take-home pay and understand your compensation.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="salaryType">Salary Type</label>
+                            <select id="salaryType" name="salaryType" data-calculate>
+                                <option value="annual" selected>Annual</option>
+                                <option value="hourly">Hourly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="biweekly">Biweekly</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="amount">Amount ($)</label>
+                            <input type="number" id="amount" name="amount" placeholder="75000" value="75000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="hoursPerWeek">Hours Per Week (for hourly)</label>
+                            <input type="number" id="hoursPerWeek" name="hoursPerWeek" placeholder="40" value="40" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="taxRate">Estimated Tax Rate (%)</label>
+                            <input type="number" id="taxRate" name="taxRate" placeholder="22" value="22" step="1" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Annual Salary</h3>
+                            <div class="result-value" id="annual">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Monthly Pay</h3>
+                            <div class="result-value" id="monthly">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Hourly Rate</h3>
+                            <div class="result-value" id="hourly">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Take-Home (After Tax)</h3>
+                            <div class="result-value" id="takeHome">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Section -->
+                <div class="calculator-info">
+                    <h2>Understanding Your Salary</h2>
+                    <p>Different jobs use different pay structures. Understanding how to convert between annual, hourly, and other pay periods helps you compare job offers and budget effectively.</p>
+                    
+                    <h3>Pay Period Types</h3>
+                    <ul>
+                        <li><strong>Annual:</strong> Yearly salary, common for salaried positions</li>
+                        <li><strong>Monthly:</strong> Annual salary divided by 12</li>
+                        <li><strong>Biweekly:</strong> Paid every 2 weeks (26 periods per year)</li>
+                        <li><strong>Hourly:</strong> Rate per hour worked, common for wage workers</li>
+                        <li><strong>Overtime:</strong> Typically 1.5x hourly rate after 40 hours/week</li>
+                    </ul>
+
+                    <h3>Deductions from Gross Pay</h3>
+                    <ul>
+                        <li><strong>Federal Income Tax:</strong> Varies by income, filing status, and withholdings</li>
+                        <li><strong>Social Security Tax:</strong> 6.2% up to maximum</li>
+                        <li><strong>Medicare Tax:</strong> 1.45% on all wages</li>
+                        <li><strong>State & Local Tax:</strong> Varies by location</li>
+                        <li><strong>Benefits:</strong> Health insurance, retirement contributions, etc.</li>
+                    </ul>
+
+                    <h3>Salary Negotiation Tips</h3>
+                    <ul>
+                        <li>Research industry standards for your position and location</li>
+                        <li>Calculate total compensation including benefits</li>
+                        <li>Consider cost of living in different areas</li>
+                        <li>Factor in job security and growth opportunities</li>
+                        <li>Document your achievements and value proposition</li>
+                        <li>Practice negotiation before discussions</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class SalaryCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        let annualSalary = 0;
+                        
+                        switch(values.salaryType) {
+                            case 'annual':
+                                annualSalary = values.amount;
+                                break;
+                            case 'monthly':
+                                annualSalary = values.amount * 12;
+                                break;
+                            case 'biweekly':
+                                annualSalary = values.amount * 26;
+                                break;
+                            case 'hourly':
+                                annualSalary = values.amount * values.hoursPerWeek * 52;
+                                break;
+                        }
+                        
+                        const monthly = annualSalary / 12;
+                        const hourly = annualSalary / (values.hoursPerWeek * 52);
+                        const takeHome = annualSalary * (1 - values.taxRate / 100);
+                        
+                        document.getElementById('annual').innerHTML = '$' + annualSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('monthly').innerHTML = '$' + monthly.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        document.getElementById('hourly').innerHTML = '$' + hourly.toFixed(2);
+                        document.getElementById('takeHome').innerHTML = '$' + takeHome.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        
+                        return annualSalary;
+                    }
+                });
+            }
+
+            displayResult() {
+                // Results displayed in calculate function
+            }
+        }
+
+        const calculator = new SalaryCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>

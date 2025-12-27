@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Income Tax Calculator - Calculate federal and state income taxes, tax brackets, and effective tax rates. Understand your tax liability instantly.">
+    <meta name="keywords" content="income tax calculator, tax bracket calculator, federal tax, income tax rate, tax liability">
+    <meta name="author" content="Cost Calculators">
+    <title>Income Tax Calculator - Cost Calculators</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/calculator.css">
+    
+    <!-- Schema Markup for Tax Calculator -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Income Tax Calculator",
+      "description": "Calculate federal and state income taxes, tax brackets, and effective tax rates",
+      "url": "https://costcalculators.github.io/calculators/tax.html",
+      "applicationCategory": "FinanceApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div id="sidebar-container"></div>
+
+    <main class="calculator-page">
+        <section class="calculator-section">
+            <div class="calculator-container">
+                <h1 class="calculator-title">Income Tax Calculator</h1>
+                <p class="calculator-description">Calculate your federal income tax liability and effective tax rate based on your income and filing status.</p>
+
+                <div class="calculator-content">
+                    <div class="calculator-form">
+                        <div class="input-group">
+                            <label for="income">Annual Gross Income ($)</label>
+                            <input type="number" id="income" name="income" placeholder="75000" value="75000" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="filingStatus">Filing Status</label>
+                            <select id="filingStatus" name="filingStatus" data-calculate>
+                                <option value="single" selected>Single</option>
+                                <option value="married">Married Filing Jointly</option>
+                                <option value="headOfHousehold">Head of Household</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="deductions">Standard Deduction ($)</label>
+                            <input type="number" id="deductions" name="deductions" placeholder="13850" value="13850" data-calculate>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="dependents">Number of Dependents</label>
+                            <input type="number" id="dependents" name="dependents" placeholder="0" value="0" min="0" data-calculate>
+                        </div>
+                    </div>
+
+                    <div class="calculator-results">
+                        <div class="result-card">
+                            <h3>Taxable Income</h3>
+                            <div class="result-value" id="taxableIncome">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Federal Income Tax</h3>
+                            <div class="result-value" id="result">$0.00</div>
+                        </div>
+                        <div class="result-card">
+                            <h3>Effective Tax Rate</h3>
+                            <div class="result-value" id="taxRate">0.00%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Information Section -->
+                <div class="calculator-info">
+                    <h2>About Income Tax Calculation</h2>
+                    <p>The income tax calculator uses current 2024 federal tax brackets for the United States. It calculates your federal income tax liability based on your gross income, filing status, and deductions.</p>
+                    
+                    <h3>Key Information</h3>
+                    <ul>
+                        <li><strong>Gross Income:</strong> Your total income before taxes and deductions</li>
+                        <li><strong>Standard Deduction:</strong> A fixed amount you can deduct from your income (varies by filing status)</li>
+                        <li><strong>Taxable Income:</strong> Gross income minus deductions and exemptions</li>
+                        <li><strong>Tax Brackets:</strong> Progressive rates that increase with income level</li>
+                        <li><strong>Effective Tax Rate:</strong> Your actual tax rate (total tax / gross income)</li>
+                    </ul>
+
+                    <h3>Tax Tips</h3>
+                    <ul>
+                        <li>Keep detailed records of income and deductions for accurate calculations</li>
+                        <li>Consider itemizing deductions if they exceed the standard deduction</li>
+                        <li>Adjust withholdings to avoid large refunds or bills at tax time</li>
+                        <li>This calculator provides estimates; consult a tax professional for accurate advice</li>
+                        <li>State and local taxes are not included in this federal calculator</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/components.js"></script>
+    <script src="../js/calculator-template.js"></script>
+    <script>
+        class TaxCalculator extends Calculator {
+            constructor() {
+                super({
+                    calculate: (values) => {
+                        const income = values.income;
+                        const deduction = values.deductions;
+                        const dependentCredit = values.dependents * 2000;
+                        
+                        const taxableIncome = Math.max(0, income - deduction);
+                        
+                        // 2024 Tax brackets for single filers
+                        let tax = 0;
+                        if (taxableIncome <= 11600) {
+                            tax = taxableIncome * 0.10;
+                        } else if (taxableIncome <= 47150) {
+                            tax = 1160 + (taxableIncome - 11600) * 0.12;
+                        } else if (taxableIncome <= 100525) {
+                            tax = 5426 + (taxableIncome - 47150) * 0.22;
+                        } else if (taxableIncome <= 191950) {
+                            tax = 17168.50 + (taxableIncome - 100525) * 0.24;
+                        } else {
+                            tax = 39110.50 + (taxableIncome - 191950) * 0.32;
+                        }
+                        
+                        tax = Math.max(0, tax - dependentCredit);
+                        
+                        // Update additional results
+                        document.getElementById('taxableIncome').innerHTML = '$' + taxableIncome.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        const effectiveRate = (tax / income * 100).toFixed(2);
+                        document.getElementById('taxRate').innerHTML = effectiveRate + '%';
+                        
+                        return tax;
+                    }
+                });
+            }
+
+            displayResult() {
+                const resultElement = document.getElementById('result');
+                if (resultElement) {
+                    resultElement.innerHTML = '$' + this.result.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    resultElement.parentElement.style.animation = 'pulse 0.6s ease-out';
+                }
+            }
+        }
+
+        const calculator = new TaxCalculator();
+        document.addEventListener('DOMContentLoaded', function() {
+            calculator.initialize();
+            calculator.calculate();
+        });
+    </script>
+</body>
+</html>
